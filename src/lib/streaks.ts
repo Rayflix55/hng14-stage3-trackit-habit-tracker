@@ -1,39 +1,41 @@
 export function calculateCurrentStreak(completions: string[], today?: string): number {
   if (!completions || completions.length === 0) return 0;
 
-  // 1. Setup reference dates (Today and Yesterday)
+  // 1. Setup reference dates as simple strings (avoiding Timezone shifts)
   const referenceDate = today || new Date().toISOString().split('T')[0];
-  const yesterday = new Date(referenceDate);
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = yesterday.toISOString().split('T')[0];
   
-  // 2. Clean and Sort Descending (Newest First)
-  const uniqueSorted = Array.from(new Set(completions)).sort((a, b) => 
-    new Date(b).getTime() - new Date(a).getTime()
-  );
+  const yesterdayDate = new Date(referenceDate);
+  yesterdayDate.setDate(yesterdayDate.getDate() - 1);
+  const yesterdayStr = yesterdayDate.toISOString().split('T')[0];
+  
+  // 2. Clean, Sort Descending (Newest First), and filter out any future dates
+  const uniqueSorted = Array.from(new Set(completions))
+    .filter(d => d <= referenceDate)
+    .sort((a, b) => b.localeCompare(a));
+
+  if (uniqueSorted.length === 0) return 0;
 
   const lastCompletion = uniqueSorted[0];
 
   // 3. Grace Period Check:
-  // If the last completion isn't Today OR Yesterday, the streak is officially broken.
+  // If the last completion isn't Today OR Yesterday, the streak is broken.
   if (lastCompletion !== referenceDate && lastCompletion !== yesterdayStr) {
     return 0;
   }
 
   let streak = 0;
-  // Start counting from the most recent completion found
-  let expectedDate = new Date(lastCompletion);
+  let currentRef = new Date(lastCompletion);
 
-  for (const dateStr of uniqueSorted) {
-    const completionDate = new Date(dateStr);
-    
-    // Check if completionDate matches our expected consecutive date
-    if (completionDate.toDateString() === expectedDate.toDateString()) {
+  for (let i = 0; i < uniqueSorted.length; i++) {
+    const dateStr = uniqueSorted[i];
+    const expectedStr = currentRef.toISOString().split('T')[0];
+
+    if (dateStr === expectedStr) {
       streak++;
-      // Move expectation back by one day
-      expectedDate.setDate(expectedDate.getDate() - 1);
+      // Move currentRef back exactly one day
+      currentRef.setDate(currentRef.getDate() - 1);
     } else {
-      // We hit a gap in the timeline
+      // Gap found
       break;
     }
   }
