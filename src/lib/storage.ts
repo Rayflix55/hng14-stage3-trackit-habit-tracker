@@ -1,6 +1,9 @@
 import { Habit } from '../types/habit';
 import { STORAGE_KEYS } from './constants';
 
+// Re-exporting so other files can import it from here easily
+export type { Habit };
+
 // Define the interfaces directly since we aren't using a separate types/auth file
 export interface User {
   id: string;
@@ -43,7 +46,11 @@ export const storage = {
   
   // Alias for the UI
   saveSession: (session: Session | null) => storage.setSession(session),
-
+clearSession: () => {
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem(STORAGE_KEYS.SESSION);
+    }
+  },
   // Habits
   getHabits: (): Habit[] => getLocalData<Habit[]>(STORAGE_KEYS.HABITS) || [],
   saveHabits: (habits: Habit[]) => setLocalData(STORAGE_KEYS.HABITS, habits),

@@ -1,9 +1,8 @@
-export type Habit = {
+export interface Habit {
   id: string;
-  userId: string;
   name: string;
-  description: string;
-  frequency: 'daily';
+  category: string;      // Added
+  frequency: string;     // Added (e.g., "Morning", "Anytime")
+  completedDates: string[]; // Added (Array of YYYY-MM-DD strings)
   createdAt: string;
-  completions: string[];
-};
+}
