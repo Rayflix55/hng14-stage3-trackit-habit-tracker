@@ -3,9 +3,9 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useRouter } from 'next/navigation';
-import { Mail, Lock, CheckSquare, Square, Eye, EyeOff, Search, Apple } from 'lucide-react';
+import { Mail, Lock, CheckSquare, Square, Eye, EyeOff, Search, Apple, Activity } from 'lucide-react';
 import { validateEmail, validatePassword } from '@/lib/validators';
-import { storage, User } from '@/lib/storage'; // Import User from storage
+import { storage, User } from '@/lib/storage';
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
@@ -52,11 +52,19 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#0C0F02] bg-[radial-gradient(circle_at_top,#2A3211_0%,#0C0F02_60%)] flex flex-col items-center p-6 text-white  pt-16">
-      <header className="w-full max-w-sm mb-10 text-center">
-        <h1 className="text-3xl font-semibold leading-tight tracking-tight px-4">
-          {isLogin ? 'Sign Up or Log In to Build Habits' : 'Sign Up, Track Your Progress Daily!'}
+    <main className="min-h-screen bg-[#0C0F02] bg-[radial-gradient(circle_at_top,#2A3211_0%,#0C0F02_60%)] flex flex-col items-center p-6 text-white pt-12">
+      
+      {/* BRAND SECTION REPLACEMENT */}
+      <header className="w-full max-w-sm mb-12 flex flex-col items-center text-center">
+        <div className="w-16 h-16 bg-[#D3FB52] rounded-2xl flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(211,251,82,0.2)]">
+          <Activity size={32} className="text-black stroke-[3px]" />
+        </div>
+        <h1 className="text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
+          Track<span className="text-[#D3FB52]">-It</span>
         </h1>
+        <p className="text-[10px] uppercase tracking-[0.6em] text-[#D3FB52]/60 mt-4 font-black">
+          Own Your Routine
+        </p>
       </header>
 
       <div className="w-full max-w-sm flex-1 flex flex-col gap-8">
@@ -77,7 +85,7 @@ export default function LoginPage() {
             <input
               type="email"
               placeholder="Email Address"
-              className="w-full h-14 bg-zinc-900/40 border border-zinc-800 rounded-2xl pl-12 pr-4 text-white focus:outline-none focus:border-zinc-600 transition-all placeholder:text-zinc-600"
+              className="w-full h-14 bg-zinc-900/40 border border-zinc-800 rounded-2xl pl-12 pr-4 text-white focus:outline-none focus:border-[#D3FB52]/50 transition-all placeholder:text-zinc-600"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
@@ -88,7 +96,7 @@ export default function LoginPage() {
             <input
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              className="w-full h-14 bg-zinc-900/40 border border-zinc-800 rounded-2xl pl-12 pr-12 text-white focus:outline-none focus:border-zinc-600 transition-all placeholder:text-zinc-600"
+              className="w-full h-14 bg-zinc-900/40 border border-zinc-800 rounded-2xl pl-12 pr-12 text-white focus:outline-none focus:border-[#D3FB52]/50 transition-all placeholder:text-zinc-600"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
@@ -113,28 +121,28 @@ export default function LoginPage() {
             <button type="button" className="text-zinc-400 hover:text-zinc-200">Forgot password</button>
           </div>
 
-          <button type="submit" className="w-full h-14 bg-[#D3FB52] text-black font-bold rounded-full hover:brightness-110 active:scale-[0.98] transition-all text-lg mt-4 shadow-[0_0_20px_rgba(211,251,82,0.2)]">
-            {isLogin ? 'Login' : 'Sign up'}
+          <button type="submit" className="w-full h-14 bg-[#D3FB52] text-black font-black uppercase tracking-widest rounded-2xl hover:brightness-110 active:scale-[0.98] transition-all text-sm mt-4 shadow-[0_10px_20px_rgba(211,251,82,0.15)]">
+            {isLogin ? 'Sign In' : 'Get Started'}
           </button>
         </form>
 
         {/* Social Section */}
         <div className="relative py-4">
           <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-zinc-800"></div></div>
-          <div className="relative flex justify-center text-[10px] uppercase tracking-widest"><span className="bg-[#0C0F02] px-3 text-zinc-500 font-bold">Or login with</span></div>
+          <div className="relative flex justify-center text-[10px] uppercase tracking-widest"><span className="bg-[#0C0F02] px-3 text-zinc-500 font-bold">Or continue with</span></div>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <button type="button" className="flex h-14 items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800 transition-all">
-            <Search size={20} /> <span className="text-sm font-medium">Google</span>
+          <button type="button" className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800 transition-all group">
+            <Search size={20} className="group-hover:text-[#D3FB52] transition-colors" /> <span className="text-sm font-medium">Google</span>
           </button>
-          <button type="button" className="flex h-14 items-center justify-center gap-2 rounded-full border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800 transition-all">
-            <Apple size={20} /> <span className="text-sm font-medium">Apple</span>
+          <button type="button" className="flex h-14 items-center justify-center gap-2 rounded-2xl border border-zinc-800 bg-zinc-900/40 hover:bg-zinc-800 transition-all group">
+            <Apple size={20} className="group-hover:text-[#D3FB52] transition-colors" /> <span className="text-sm font-medium">Apple</span>
           </button>
         </div>
 
         <p className="text-center text-sm text-zinc-500 mt-auto pb-8">
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
+          {isLogin ? "New to the hustle? " : "Already part of the elite? "}
           <button onClick={() => setIsLogin(!isLogin)} className="text-[#D3FB52] font-semibold hover:underline">
             {isLogin ? 'Create an account' : 'Login'}
           </button>
