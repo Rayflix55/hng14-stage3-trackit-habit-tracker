@@ -6,7 +6,7 @@ A high-performance, **Glassmorphism-styled** habit tracking application built wi
 
 ### Developer Information
 - **Name:** Akpe Samuel Rayflix
-- **Track:** Frontend Development / QA
+- **Track:** Frontend Development 
 - **Stage:** Stage 3
 
 ### Core Logic (Streak Algorithm)
@@ -24,6 +24,13 @@ The streak calculation logic is centralized in `src/lib/streaks.ts`. It handles:
 - **Icons:** Lucide React
 - **Testing:** Vitest (Unit/Integration) & Playwright (E2E)
 - **Deployment:** Vercel
+
+---
+
+## 💡 Technical Decisions
+- **Vitest vs. Jest:** Chosen for its native Vite integration and significantly faster execution speeds in a Next.js environment.
+- **LocalStorage Persistence:** Implemented to ensure the app remains functional without a backend, prioritizing privacy and zero-latency interactions.
+- **Tailwind + Glassmorphism:** Selected to achieve a premium "Apple-like" aesthetic with minimal CSS overhead and maximum responsiveness.
 
 ---
 
