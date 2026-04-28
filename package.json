@@ -13,6 +13,7 @@
     "test": "npm run test:unit && npm run test:integration && npm run test:e2e"
   },
   "dependencies": {
+    "framer-motion": "^12.38.0",
     "lucide-react": "^0.300.0",
     "next": "14.x.x",
     "react": "^18",

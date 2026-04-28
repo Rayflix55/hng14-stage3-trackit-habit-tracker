@@ -1,12 +1,20 @@
-import { User, Session } from '../types/auth';
 import { Habit } from '../types/habit';
 import { STORAGE_KEYS } from './constants';
 
-// Generic helper to get data from localStorage
+// Define the interfaces directly since we aren't using a separate types/auth file
+export interface User {
+  id: string;
+  email: string;
+  password: string;
+  createdAt: string;
+  habits: Habit[];
+}
+
+// Session is just a User object or null
+export type Session = User;
+
 const getLocalData = <T>(key: string): T | null => {
-  // Check if we are in a browser OR if localStorage is mocked (for tests)
   if (typeof window === 'undefined' && typeof localStorage === 'undefined') return null;
-  
   try {
     const data = localStorage.getItem(key);
     return data ? JSON.parse(data) : null;
@@ -15,7 +23,6 @@ const getLocalData = <T>(key: string): T | null => {
   }
 };
 
-// Generic helper to set data in localStorage
 const setLocalData = <T>(key: string, data: T): void => {
   if (typeof window !== 'undefined' || typeof localStorage !== 'undefined') {
     localStorage.setItem(key, JSON.stringify(data));
@@ -33,6 +40,9 @@ export const storage = {
   // Session
   getSession: (): Session | null => getLocalData<Session>(STORAGE_KEYS.SESSION),
   setSession: (session: Session | null) => setLocalData(STORAGE_KEYS.SESSION, session),
+  
+  // Alias for the UI
+  saveSession: (session: Session | null) => storage.setSession(session),
 
   // Habits
   getHabits: (): Habit[] => getLocalData<Habit[]>(STORAGE_KEYS.HABITS) || [],

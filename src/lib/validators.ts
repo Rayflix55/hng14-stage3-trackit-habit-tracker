@@ -1,3 +1,4 @@
+// --- Existing Habit Logic ---
 export function validateHabitName(name: string): {
   valid: boolean;
   value: string;
@@ -27,3 +28,20 @@ export function validateHabitName(name: string): {
     error: null,
   };
 }
+
+// --- New Auth Logic (Required for Login Page) ---
+
+/**
+ * Validates basic email format
+ */
+export const validateEmail = (email: string): boolean => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return re.test(email);
+};
+
+/**
+ * Validates password length based on TRD (min 6 chars)
+ */
+export const validatePassword = (password: string): boolean => {
+  return password.length >= 6;
+};
