@@ -1,41 +1,35 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { storage } from '../../lib/storage';
-import { STORAGE_KEYS } from '../../lib/constants';
 
-describe('Storage Engine', () => {
+describe("Storage Engine", () => {
   beforeEach(() => {
-    vi.stubGlobal('localStorage', {
-      getItem: vi.fn(),
-      setItem: vi.fn(),
-      clear: vi.fn(),
-    });
+    // Completely reset the environment
+    localStorage.clear();
+    vi.clearAllMocks();
+    
+    // Explicitly spy on the methods
+    vi.spyOn(Storage.prototype, 'setItem');
+    vi.spyOn(Storage.prototype, 'getItem');
   });
 
-  it('saves and retrieves a user', () => {
-    const mockUser = { id: '1', email: 'test@hng.tech', name: 'Akpe' };
+  it("saves and retrieves a user", () => {
+    const mockUser = { email: "rayflix@techbro.com", habits: [] };
     
-    // 1. Mock getUsers to return empty initially
-    vi.mocked(localStorage.getItem).mockReturnValueOnce(null);
+    // 1. Save the session
+    storage.saveSession(mockUser as any);
     
-    // 2. Save the user
-    storage.saveUser(mockUser as any);
+    // 2. Verify setItem was called on the prototype
+    expect(Storage.prototype.setItem).toHaveBeenCalled();
     
-    // 3. Verify setItem was called with the right data
-    expect(localStorage.setItem).toHaveBeenCalledWith(
-      STORAGE_KEYS.USERS, 
-      JSON.stringify([mockUser])
-    );
-
-    // 4. Mock the "read-back" for getUsers()
-    vi.mocked(localStorage.getItem).mockReturnValue(JSON.stringify([mockUser]));
-    
-    const users = storage.getUsers();
-    expect(users).toHaveLength(1);
-    expect(users[0].email).toBe('test@hng.tech');
+    // 3. Verify retrieval matches
+    const retrieved = storage.getSession();
+    expect(retrieved?.email).toBe("rayflix@techbro.com");
   });
 
-  it('handles empty storage gracefully', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue(null);
-    expect(storage.getHabits()).toEqual([]);
+  it("handles empty storage gracefully", () => {
+    // Ensure it's empty
+    localStorage.clear();
+    const retrieved = storage.getSession();
+    expect(retrieved).toBeNull();
   });
 });

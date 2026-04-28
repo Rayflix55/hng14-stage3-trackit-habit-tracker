@@ -7,12 +7,15 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   test: {
-    environment: 'node', // Changed from jsdom to node for logic tests
+    environment: 'jsdom', // Changed from jsdom to node for logic tests
     globals: true,
+    exclude: ['**/node_modules/**', '**/dist/**', '**/src/tests/e2e/**'],
   },
+  
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
+  
 });
