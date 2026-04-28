@@ -296,7 +296,7 @@ export default function DashboardPage() {
 
       {/* FAB */}
       <motion.button
-        variants={itemVars} whileHover={{ scale: 1.1, rotate: 90 }} whileTap={{ scale: 0.9 }} onClick={() => setIsHabitModalOpen(true)}
+       aria-label="Add new habit" variants={itemVars} whileHover={{ scale: 1.1, rotate: 90 }} whileTap={{ scale: 0.9 }} onClick={() => setIsHabitModalOpen(true)}
         className="fixed bottom-10 right-6 z-[100] h-16 w-16 bg-[#D3FB52] text-black rounded-full flex items-center justify-center shadow-[0_10px_30px_rgba(211,251,82,0.3)]"
       >
         <PlusCircle size={32} />
