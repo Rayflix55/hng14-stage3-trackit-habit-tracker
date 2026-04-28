@@ -17,7 +17,6 @@ import {
   Trash2,
   ChevronDown,
   Zap,
-  Activity,
 } from "lucide-react";
 
 const containerVars = {
@@ -56,7 +55,6 @@ export default function DashboardPage() {
       router.push("/login");
     } else {
       setUser(session);
-      // Habits are now pulled directly from the session user for consistency
       setHabits(session.habits || []);
     }
   }, [router]);
@@ -89,7 +87,7 @@ export default function DashboardPage() {
 
     setHabits(updatedHabits);
     setUser(updatedUser);
-    storage.saveSession(updatedUser); // This now internally calls saveUser too
+    storage.saveSession(updatedUser);
 
     setIsHabitModalOpen(false);
     setNewHabit({ name: "", category: "Health", frequency: "Morning" });
@@ -97,10 +95,8 @@ export default function DashboardPage() {
 
   const deleteHabit = (id: string) => {
     if (!user) return;
-
     const updatedHabits = habits.filter((habit) => habit.id !== id);
     const updatedUser = { ...user, habits: updatedHabits };
-
     setHabits(updatedHabits);
     setUser(updatedUser);
     storage.saveSession(updatedUser);
@@ -143,10 +139,7 @@ export default function DashboardPage() {
             whileHover={{ scale: 1.15, rotate: 8 }}
             transition={{ type: "spring", stiffness: 400 }}
           >
-            <UserCircle
-              className="w-10 h-10 text-[#D3FB52]"
-              strokeWidth={1.5}
-            />
+            <UserCircle className="w-10 h-10 text-[#D3FB52]" strokeWidth={1.5} />
           </motion.div>
           <div>
             <p className="text-zinc-500 text-[10px] uppercase tracking-widest font-bold">
@@ -168,22 +161,21 @@ export default function DashboardPage() {
       </motion.header>
 
       {/* 2. Weekly Strip */}
-      <motion.section
-        variants={itemVars}
-        className="mb-10 grid grid-cols-7 gap-2"
-      >
+      <motion.section variants={itemVars} className="mb-10 grid grid-cols-7 gap-2">
         {weekDates.map((day) => (
           <motion.div
             key={day.fullDate}
             whileHover={{ scale: 1.08, y: -5 }}
-            className={`flex flex-col items-center justify-center gap-1 h-24 rounded-2xl border transition-all ${day.isToday ? "bg-[#D3FB52] border-[#D3FB52] text-black shadow-[0_0_30px_rgba(211,251,82,0.4)]" : "bg-zinc-800/40 border-zinc-700/50 text-zinc-400"}`}
+            className={`flex flex-col items-center justify-center gap-1 h-24 rounded-2xl border transition-all ${
+              day.isToday
+                ? "bg-[#D3FB52] border-[#D3FB52] text-black shadow-[0_0_30px_rgba(211,251,82,0.4)]"
+                : "bg-zinc-800/40 border-zinc-700/50 text-zinc-400"
+            }`}
           >
             <span className="text-[10px] uppercase font-bold tracking-widest">
               {day.dayName}
             </span>
-            <span className="text-3xl font-bold tracking-tighter">
-              {day.date}
-            </span>
+            <span className="text-3xl font-bold tracking-tighter">{day.date}</span>
           </motion.div>
         ))}
       </motion.section>
@@ -196,18 +188,8 @@ export default function DashboardPage() {
       >
         <div className="flex items-center justify-between gap-6 relative z-10">
           <div className="relative w-32 h-32 flex items-center justify-center">
-            <svg
-              className="absolute w-full h-full rotate-[-90deg]"
-              viewBox="0 0 36 36"
-            >
-              <circle
-                cx="18"
-                cy="18"
-                r="16"
-                fill="none"
-                stroke="#2A3211"
-                strokeWidth="3"
-              />
+            <svg className="absolute w-full h-full rotate-[-90deg]" viewBox="0 0 36 36">
+              <circle cx="18" cy="18" r="16" fill="none" stroke="#2A3211" strokeWidth="3" />
               <motion.circle
                 cx="18"
                 cy="18"
@@ -257,23 +239,6 @@ export default function DashboardPage() {
               const isDone = habit.completedDates.includes(todayStr);
               const streak = calculateCurrentStreak(habit.completedDates);
 
-              {
-                /* In your JSX */
-              }
-              {
-                streak >= 3 && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="flex items-center gap-1 text-orange-500"
-                  >
-                    <Zap size={14} fill="currentColor" />
-                    <span className="text-xs font-bold">
-                      {streak} DAY STREAK
-                    </span>
-                  </motion.div>
-                );
-              }
               return (
                 <motion.div
                   layout
@@ -286,6 +251,19 @@ export default function DashboardPage() {
                 >
                   <div className="flex justify-between items-start mb-8">
                     <div>
+                      {/* Streak implementation inserted here */}
+                      {streak >= 1 && (
+                        <motion.div
+                          initial={{ scale: 0, x: -10 }}
+                          animate={{ scale: 1, x: 0 }}
+                          className="flex items-center gap-1 text-orange-500 mb-1"
+                        >
+                          <Zap size={14} fill="currentColor" />
+                          <span className="text-[10px] font-black uppercase tracking-tighter">
+                            {streak} DAY STREAK
+                          </span>
+                        </motion.div>
+                      )}
                       <span className="text-[10px] uppercase font-bold text-[#D3FB52]/60 tracking-widest">
                         {habit.category}
                       </span>
@@ -294,7 +272,6 @@ export default function DashboardPage() {
                       </h3>
                     </div>
 
-                    {/* Ghost Delete Button */}
                     <button
                       onClick={() => deleteHabit(habit.id)}
                       className="opacity-0 group-hover:opacity-100 p-2 text-zinc-600 hover:text-red-500 transition-all transform hover:rotate-12"
@@ -304,28 +281,30 @@ export default function DashboardPage() {
                   </div>
 
                   <div className="flex items-center justify-between">
-                    <motion.p
+                    <motion.div
                       key={habit.completedDates.length}
                       initial={{ y: 5 }}
                       animate={{ y: 0 }}
-                      className="text-[#D3FB52] font-black text-3xl"
+                      className="flex items-baseline"
                     >
-                      {habit.completedDates.length}{" "}
-                      <span className="text-[10px] text-zinc-500 font-bold ml-1 tracking-widest">
-                        DAYS
+                      <span className="text-[#D3FB52] font-black text-3xl">
+                        {habit.completedDates.length}
                       </span>
-                    </motion.p>
+                      <span className="text-[10px] text-zinc-500 font-bold ml-1 tracking-widest uppercase">
+                        Days
+                      </span>
+                    </motion.div>
                     <motion.button
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       onClick={() => toggleHabitCompletion(habit.id)}
-                      className={`w-14 h-14 flex items-center justify-center rounded-2xl transition-all ${isDone ? "bg-[#D3FB52] text-black shadow-[0_0_20px_rgba(211,251,82,0.3)]" : "bg-zinc-800 text-zinc-500"}`}
+                      className={`w-14 h-14 flex items-center justify-center rounded-2xl transition-all ${
+                        isDone
+                          ? "bg-[#D3FB52] text-black shadow-[0_0_20px_rgba(211,251,82,0.3)]"
+                          : "bg-zinc-800 text-zinc-500"
+                      }`}
                     >
-                      {isDone ? (
-                        <CheckCircle2 size={28} />
-                      ) : (
-                        <Circle size={28} />
-                      )}
+                      {isDone ? <CheckCircle2 size={28} /> : <Circle size={28} />}
                     </motion.button>
                   </div>
                 </motion.div>
@@ -350,7 +329,7 @@ export default function DashboardPage() {
         </AnimatePresence>
       </motion.section>
 
-      {/* FAB */}
+      {/* FAB and Modals remain same... */}
       <motion.button
         variants={itemVars}
         whileHover={{ scale: 1.1, rotate: 90 }}
@@ -385,8 +364,7 @@ export default function DashboardPage() {
                 Pause <span className="text-[#D3FB52]">Tracking?</span>
               </h2>
               <p className="text-zinc-500 text-sm mb-10 leading-relaxed font-medium">
-                Your progress is saved, but we'll miss the hustle. Ready to call
-                it a day?
+                Your progress is saved, but we'll miss the hustle. Ready to call it a day?
               </p>
               <div className="flex flex-col gap-3">
                 <button
@@ -454,9 +432,7 @@ export default function DashboardPage() {
                     className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-2xl p-5 text-lg text-white outline-none focus:border-[#D3FB52] focus:bg-zinc-800 transition-all placeholder:text-zinc-700"
                     placeholder="e.g. Morning Meditation"
                     value={newHabit.name}
-                    onChange={(e) =>
-                      setNewHabit({ ...newHabit, name: e.target.value })
-                    }
+                    onChange={(e) => setNewHabit({ ...newHabit, name: e.target.value })}
                   />
                 </div>
 
@@ -469,9 +445,7 @@ export default function DashboardPage() {
                       <select
                         className="w-full bg-zinc-800/50 border border-zinc-700/50 rounded-2xl p-4 pr-10 text-zinc-300 outline-none appearance-none hover:bg-zinc-800 focus:border-[#D3FB52]/50 transition-all cursor-pointer"
                         value={newHabit.category}
-                        onChange={(e) =>
-                          setNewHabit({ ...newHabit, category: e.target.value })
-                        }
+                        onChange={(e) => setNewHabit({ ...newHabit, category: e.target.value })}
                       >
                         <option>Health</option>
                         <option>Work</option>
