@@ -1,3 +1,9 @@
+/**
+ * MENTOR_TRACE: Requirement 4.2 - Streak Calculation Algorithm
+ * Calculates the current consecutive days of completion.
+ * Includes a grace period for the current day.
+ */
+
 export function calculateCurrentStreak(completions: string[], today?: string): number {
   if (!completions || completions.length === 0) return 0;
 

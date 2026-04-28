@@ -1,8 +1,12 @@
-export function getHabitSlug(name: string): string {
+/**
+ * MENTOR_TRACE: Requirement 4.1 - Slug Generation
+ * Slugs must be lowercase and hyphenated.
+ */
+export const getHabitSlug = (name: string): string => {
   return name
     .toLowerCase()
     .trim()
-    .replace(/[^a-z0-9\s-]/g, '') // 1. Remove non-alphanumeric (keep spaces and hyphens for now)
-    .replace(/\s+/g, '-')         // 2. Turn all whitespace into a single hyphen
-    .replace(/-+/g, '-');         // 3. Collapse multiple hyphens into one
-}
+    .replace(/[^\w\s-]/g, '') // Remove special chars
+    .replace(/[\s_-]+/g, '-') // Replace spaces/underscores with hyphens
+    .replace(/^-+|-+$/g, ''); // Trim hyphens from ends
+};
