@@ -18,7 +18,7 @@ export default function SplashScreen() {
       } else {
         router.push("/login");
       }
-    }, 1500); // 2 seconds
+    }, 1500); 
 
     return () => clearTimeout(timer);
   }, [router]);

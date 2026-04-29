@@ -73,24 +73,32 @@ npm run dev
 Plaintext
 src/
 ├── app/             # Next.js App Router (Pages & Layouts)
+│   ├── dashboard/   # Habit tracking dashboard UI
+│   ├── login/       # Authentication pages
+│   └── signup/      # User registration
 ├── components/      
-│   ├── habits/      # HabitCard and habit-specific UI components
-│   └── ui/          # Reusable design system components
-├── lib/             # CORE LOGIC (Pure functions, storage, streak algorithms)
-└── tests/           
-    ├── unit/        # Isolated logic tests
-    ├── integration/ # Cross-module interaction tests
-    └── e2e/         # Playwright browser specs
-✨ Key Features
-Modern Glassmorphism UI: A sleek, dark-themed interface with frosted glass effects and high-contrast typography.
+│   ├── habits/      # HabitCard.tsx and habit logic components
+│   ├── shared/      # SplashScreen.tsx and global wrappers
+│   └── ui/          # Reusable PulseMap.tsx and design elements
+├── lib/             # CORE LOGIC
+│   ├── streaks.ts   # Streak calculation algorithm
+│   ├── storage.ts   # LocalStorage persistence layer
+│   ├── dateUtils.ts # Date formatting and manipulation
+│   └── validators.ts# Input & data validation
+├── types/           # TypeScript Type Definitions
+│   ├── auth.ts      
+│   └── habit.ts     
+└── tests/           # Testing Pyramid
+    ├── unit/        # Logic & Utility tests
+    ├── integration/ # Flow & State tests
+    └── e2e/         # Playwright browser specs        # Full Testing Pyramid (Unit, Integration, E2E)      # Playwright browser specs
+## ✨ Key Features
+- **Modern Glassmorphism UI:** A sleek, dark-themed interface with frosted glass effects and high-contrast typography.
+- **Real-time Streak Tracking:** Immediate visual feedback upon habit completion with animated progress.
+- **Robust Persistence:** 100% client-side persistence via localStorage for instant load times and offline accessibility.
+- **Performance Optimized:** Clean console logs and resolved React ref warnings for a smooth production experience.
 
-Real-time Streak Tracking: Immediate visual feedback upon habit completion with animated progress.
-
-Robust Persistence: 100% Client-side persistence via localStorage for instant load times and offline accessibility.
-
-Performance Optimized: Clean console logs and resolved React ref warnings for a smooth production experience.
-
-🛡 Quality Standards
+## 🛡 Quality Standards
 Ref Stability: HabitCard implements React.forwardRef for seamless Framer Motion transitions and layout animations.
 
 Type Safety: 100% TypeScript coverage for all data models, utilities, and component props.

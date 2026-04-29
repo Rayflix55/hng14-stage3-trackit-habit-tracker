@@ -1,10 +1,10 @@
 import './globals.css'
-import type { Metadata } from "next"; // Add this line
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Habit Tracker",
   description: "Master your daily routine",
-  manifest: "/manifest.json", // This tells the browser to look in /public/manifest.json
+  manifest: "/manifest.json", 
 };
 
 export default function RootLayout({

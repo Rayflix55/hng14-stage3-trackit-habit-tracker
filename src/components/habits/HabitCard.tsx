@@ -14,7 +14,7 @@ interface HabitCardProps {
   onDelete: (id: string) => void;
 }
 
-// Wrapped in forwardRef to resolve Framer Motion/PopChild ref warnings
+
 export const HabitCard = forwardRef<HTMLDivElement, HabitCardProps>(
   ({ habit, todayStr, onToggle, onDelete }, ref) => {
     const isDone = habit.completedDates.includes(todayStr);
@@ -22,7 +22,7 @@ export const HabitCard = forwardRef<HTMLDivElement, HabitCardProps>(
 
     return (
       <motion.div
-        ref={ref} // Attach the forwarded ref here
+        ref={ref}
         layout
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

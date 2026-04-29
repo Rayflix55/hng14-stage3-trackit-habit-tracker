@@ -1,4 +1,4 @@
-// --- Existing Habit Logic ---
+
 export function validateHabitName(name: string): {
   valid: boolean;
   value: string;

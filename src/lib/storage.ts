@@ -36,10 +36,10 @@ export const storage = {
     const users = storage.getUsers();
     const index = users.findIndex(u => u.id === user.id);
     if (index !== -1) {
-      users[index] = user; // Update existing
+      users[index] = user; 
       setLocalData(STORAGE_KEYS.USERS, users);
     } else {
-      setLocalData(STORAGE_KEYS.USERS, [...users, user]); // Add new
+      setLocalData(STORAGE_KEYS.USERS, [...users, user]); 
     }
   },
 
@@ -56,7 +56,7 @@ export const storage = {
     }
   },
 
-  // Simplified Habits (Reading from the active session user)
+  
   getHabits: (): Habit[] => {
     const session = storage.getSession();
     return session ? session.habits : [];

@@ -7,7 +7,7 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig({
   test: {
-    environment: 'jsdom', // Changed from jsdom to node for logic tests
+    environment: 'jsdom', 
     globals: true,
     exclude: ['**/node_modules/**', '**/dist/**', '**/src/tests/e2e/**'],
   },

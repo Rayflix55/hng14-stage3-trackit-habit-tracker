@@ -15,7 +15,7 @@ describe("Habit Logic", () => {
 
     it("should return false for names shorter than 3 characters", () => {
       expect(validateHabitName("Hi")).toBe(false);
-      expect(validateHabitName("  ")).toBe(false); // Testing whitespace
+      expect(validateHabitName("  ")).toBe(false);
     });
 
     it("should return false for names longer than 50 characters", () => {
@@ -54,7 +54,7 @@ describe("Habit Logic", () => {
       const today = "2026-04-28";
       toggleHabitDate(mockHabit, today);
       
-      // The original habit should still only have 1 date
+ 
       expect(mockHabit.completedDates.length).toBe(1);
     });
   });

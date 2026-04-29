@@ -10,7 +10,7 @@ describe('calculateCurrentStreak', () => {
 it("returns 1 when today is not completed but yesterday was (Grace Period)", () => {
   const today = '2026-04-27';
   const completions = ['2026-04-26'];
-  // Change .toBe(0) to .toBe(1) to match your logic's grace period
+  // Change .toBe(0) to .toBe(1) to match logic's grace period
   expect(calculateCurrentStreak(completions, today)).toBe(1);
 });
 

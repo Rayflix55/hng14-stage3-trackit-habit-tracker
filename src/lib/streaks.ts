@@ -7,14 +7,14 @@
 export function calculateCurrentStreak(completions: string[], today?: string): number {
   if (!completions || completions.length === 0) return 0;
 
-  // 1. Setup reference dates as simple strings (avoiding Timezone shifts)
+
   const referenceDate = today || new Date().toISOString().split('T')[0];
   
   const yesterdayDate = new Date(referenceDate);
   yesterdayDate.setDate(yesterdayDate.getDate() - 1);
   const yesterdayStr = yesterdayDate.toISOString().split('T')[0];
   
-  // 2. Clean, Sort Descending (Newest First), and filter out any future dates
+
   const uniqueSorted = Array.from(new Set(completions))
     .filter(d => d <= referenceDate)
     .sort((a, b) => b.localeCompare(a));
@@ -23,7 +23,7 @@ export function calculateCurrentStreak(completions: string[], today?: string): n
 
   const lastCompletion = uniqueSorted[0];
 
-  // 3. Grace Period Check:
+  //  Grace Period Check:
   // If the last completion isn't Today OR Yesterday, the streak is broken.
   if (lastCompletion !== referenceDate && lastCompletion !== yesterdayStr) {
     return 0;
