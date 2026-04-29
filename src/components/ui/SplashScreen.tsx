@@ -24,7 +24,7 @@ export default function SplashScreen() {
   }, [router]);
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0C0F02]">
+    <div data-testid="splash-screen" className="fixed inset-0 z-50 flex items-center justify-center bg-[#0C0F02]">
       {/* Background Ambient Glow */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -72,7 +72,7 @@ export default function SplashScreen() {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="text-4xl font-black tracking-tighter text-white uppercase italic"
           >
-            Track<span className="text-[#D3FB52]">-It</span>
+            Habit<span className="text-[#D3FB52]">Tracker</span>
           </motion.h1>
 
           <motion.p

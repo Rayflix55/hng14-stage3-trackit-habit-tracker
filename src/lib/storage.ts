@@ -1,17 +1,6 @@
-import { Habit } from '../types/habit';
+import { Habit } from '../types/auth'; // Or '../types/auth' if you moved it
+import { User, Session } from '../types/auth'; 
 import { STORAGE_KEYS } from './constants';
-
-export type { Habit };
-
-export interface User {
-  id: string;
-  email: string;
-  password: string;
-  createdAt: string;
-  habits: Habit[];
-}
-
-export type Session = User;
 
 const getLocalData = <T>(key: string): T | null => {
   if (typeof window === 'undefined') return null;
@@ -47,7 +36,6 @@ export const storage = {
   
   saveSession: (session: Session | null) => {
     setLocalData(STORAGE_KEYS.SESSION, session);
-    if (session) storage.saveUser(session); // Keep global user list in sync
   },
 
   clearSession: () => {
@@ -56,9 +44,34 @@ export const storage = {
     }
   },
 
-  
   getHabits: (): Habit[] => {
+    const allHabits = getLocalData<Habit[]>(STORAGE_KEYS.HABITS) || [];
     const session = storage.getSession();
-    return session ? session.habits : [];
+    
+    if (!session) return [];
+    
+    // Filters based on the session userId
+    return allHabits.filter((habit: Habit) => habit.userId === session.userId);
+  },
+
+  saveHabit: (habit: Habit) => {
+    const allHabits = getLocalData<Habit[]>(STORAGE_KEYS.HABITS) || [];
+    const index = allHabits.findIndex(h => h.id === habit.id);
+    
+    let updatedHabits;
+    if (index !== -1) {
+      allHabits[index] = habit;
+      updatedHabits = allHabits;
+    } else {
+      updatedHabits = [...allHabits, habit];
+    }
+    
+    setLocalData(STORAGE_KEYS.HABITS, updatedHabits);
+  },
+
+  deleteHabit: (habitId: string) => {
+    const allHabits = getLocalData<Habit[]>(STORAGE_KEYS.HABITS) || [];
+    const filtered = allHabits.filter((h: Habit) => h.id !== habitId);
+    setLocalData(STORAGE_KEYS.HABITS, filtered);
   }
 };

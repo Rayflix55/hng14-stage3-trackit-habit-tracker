@@ -1,6 +1,7 @@
 "use client";
 import { motion } from "framer-motion";
-import { Habit } from "@/lib/storage";
+import { storage } from "@/lib/storage";
+import { Habit } from "@/types/auth";
 
 interface PulseMapProps {
   habits: Habit[];

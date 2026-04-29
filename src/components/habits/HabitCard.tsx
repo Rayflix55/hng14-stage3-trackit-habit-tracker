@@ -3,7 +3,7 @@
 import React, { forwardRef } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, Circle, Trash2, Zap } from "lucide-react";
-import { Habit } from "@/lib/storage";
+import { Habit } from "@/types/auth";
 import { calculateCurrentStreak } from "@/lib/streaks";
 import { getHabitSlug } from "@/lib/slug";
 
@@ -29,7 +29,8 @@ export const HabitCard = forwardRef<HTMLDivElement, HabitCardProps>(
         exit={{ opacity: 0, scale: 0.8 }}
         whileHover={{ y: -5 }}
         key={habit.id}
-        data-testid={`habit-card-${getHabitSlug(habit.name)}`}
+      data-testid="habit-card"
+  data-testname={`habit-card-${getHabitSlug(habit.name)}`}
         className="group relative p-6 rounded-[2rem] border border-zinc-700/50 bg-zinc-900/60 overflow-hidden"
       >
         <div className="flex justify-between items-start mb-4">

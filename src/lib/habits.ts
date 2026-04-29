@@ -1,4 +1,4 @@
-import { Habit } from "./storage";
+import { Habit } from '../types/auth';
 
 /**
  * MENTOR_TRACE: Requirement 4.3 - Habit Management

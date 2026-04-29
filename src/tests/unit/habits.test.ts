@@ -1,5 +1,7 @@
+import { describe, it, expect } from "vitest"; // Ensure vitest globals are imported
 import { validateHabitName, toggleHabitDate } from "../../lib/habits";
-import { Habit } from "../../lib/storage";
+// FIXED: Import Habit from types, not from storage
+import { Habit } from "../../types/auth"; 
 
 /**
  * MENTOR_TRACE: Requirement 4.3 - Habit Management Tests
@@ -27,6 +29,7 @@ describe("Habit Logic", () => {
   describe("toggleHabitDate", () => {
     const mockHabit: Habit = {
       id: "test-123",
+      userId: "user-abc", // FIXED: Added userId to satisfy the Habit type
       name: "Meditation",
       category: "Mindset",
       frequency: "Morning",
@@ -54,7 +57,6 @@ describe("Habit Logic", () => {
       const today = "2026-04-28";
       toggleHabitDate(mockHabit, today);
       
- 
       expect(mockHabit.completedDates.length).toBe(1);
     });
   });
